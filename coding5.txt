@@ -1,0 +1,39 @@
+# 1. Import library
+import numpy as np
+import cv2
+import matplotlib.pyplot as plt
+from scipy.signal import convolve2d
+
+# 2. Load gambar
+# Pastikan file "lily of the valley.jpg" sudah di-upload ke Colab
+img = cv2.imread("lily of the valley.jpg", cv2.IMREAD_GRAYSCALE)
+
+# Tampilkan gambar asli
+plt.figure(figsize=(6,6))
+plt.imshow(img, cmap='gray')
+plt.title("Gambar Asli (Grayscale)")
+plt.axis("off")
+plt.show()
+
+# 3. Buat kernel low-pass filter (mean filter 3x3)
+H = np.ones((3,3)) / 9
+print("Kernel Low-pass (Mean Filter):")
+print(H)
+
+# 4. Lakukan konvolusi
+Y = convolve2d(img, H, mode='same', boundary='fill', fillvalue=0)
+
+# 5. Tampilkan hasil
+plt.figure(figsize=(12,6))
+
+plt.subplot(1,2,1)
+plt.imshow(img, cmap='gray')
+plt.title("Input Gambar Asli")
+plt.axis("off")
+
+plt.subplot(1,2,2)
+plt.imshow(Y, cmap='gray')
+plt.title("Output Setelah Low-pass Filter")
+plt.axis("off")
+
+plt.show()
